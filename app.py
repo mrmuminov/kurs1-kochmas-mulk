@@ -8,7 +8,7 @@ from datetime import date
 from flask import Flask, redirect, render_template_string, request, send_from_directory
 
 FOLDER = os.path.dirname(os.path.abspath(__file__))
-DATABASE_FILE = os.path.join(FOLDER, "database.sqlite")
+DATABASE_FILE = os.environ.get("DATABASE_FILE", os.path.join(FOLDER, "database.sqlite"))
 
 TYPES = ["Kvartira", "Uy", "Yer uchastkasi", "Ofis"]
 ROLES = ["Sotuvchi", "Xaridor"]
@@ -391,4 +391,4 @@ def add_deal():
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8080)
+    app.run(host=os.environ.get("HOST", "127.0.0.1"), port=8080)

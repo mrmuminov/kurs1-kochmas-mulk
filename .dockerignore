@@ -1,0 +1,5 @@
+.git
+.gitignore
+database.sqlite
+__pycache__
+.claude
