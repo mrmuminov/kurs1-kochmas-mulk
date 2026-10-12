@@ -1,0 +1,196 @@
+KO'CHMAS MULK AGENTLIGI - QO'LLANMA (WINDOWS UCHUN)
+(dasturlashni bilmaydigan odam uchun)
+====================================================================
+
+BU NIMA?
+--------
+Ko'chmas mulk agentligi uchun kichik dastur (Python tilida yozilgan).
+U brauzerda (Chrome, Edge, Firefox) ochiladi. Unda uylar, mijozlar va
+sotuv bitimlarini yozib borasiz. Internet faqat o'rnatish vaqtida
+kerak, keyin hamma narsa kompyuteringizning o'zida ishlaydi.
+
+Dastur ikkita fayldan iborat:
+  app.py     - dasturning o'zi
+  style.css  - ko'rinishi (ranglar, jadvallar)
+Ularga tegmang. Ma'lumotlar saqlanadigan database.sqlite fayli dastur
+birinchi ishga tushganda o'zi paydo bo'ladi.
+
+
+1. PYTHON'NI O'RNATISH (bir marta qilinadi)
+-------------------------------------------
+1) Brauzerda python.org/downloads saytiga kiring.
+2) Sariq "Download Python 3.x.x" tugmasini bosib, faylni yuklab oling.
+3) Yuklangan faylni ikki marta bosib oching.
+4) MUHIM: birinchi oynaning eng pastidagi
+   "Add python.exe to PATH" degan katakchani belgilang (✓).
+5) "Install Now" tugmasini bosing va o'rnatilishini kuting.
+   Oxirida "Close" ni bosing.
+
+Tekshirish: klaviaturada Win + R bosing, "cmd" deb yozib Enter bosing.
+Qora oyna ochiladi. Unga yozing:
+
+    py --version
+
+"Python 3.12.x" kabi yozuv chiqsa, hammasi joyida.
+
+
+2. FLASK'NI O'RNATISH (bir marta qilinadi)
+------------------------------------------
+Flask - dastur ishlashi uchun kerak bo'lgan qo'shimcha qism. Shu qora
+oynaning o'zida yozing va Enter bosing (internet ulangan bo'lsin):
+
+    py -m pip install flask
+
+Oxirida "Successfully installed ... flask ..." degan yozuv chiqadi.
+(Agar "already satisfied" yozilsa, Flask avvaldan o'rnatilgan, bu ham
+yaxshi.)
+
+
+3. DASTUR PAPKASINI TAYYORLASH
+------------------------------
+1) Diskda C:\ ichida "kurs1" nomli yangi papka oching (C:\kurs1).
+2) app.py va style.css fayllarini shu papkaga ko'chiring.
+   (Faqat shu ikkita fayl kerak.)
+
+Papka "C:\kurs1" bo'lishi shart emas, lekin Desktop (Ish stoli) yoki
+OneDrive ichida emas, oddiy joyda bo'lgani yaxshi.
+
+
+4. DASTURNI ISHGA TUSHIRISH
+---------------------------
+1) Fayllar Explorer'da C:\kurs1 papkasini oching.
+2) Oynaning tepasidagi manzil qatorini (C:\kurs1 yozilgan joy) bir
+   marta bosing, ichidagini o'chirib, "cmd" deb yozing va Enter
+   bosing. Shu papka ichida qora oyna ochiladi.
+3) Qora oynaga yozing va Enter bosing:
+
+    py app.py
+
+4) Oynada "Running on http://127.0.0.1:8080" degan yozuv chiqadi.
+   QORA OYNANI YOPMANG. U yopilsa, dastur to'xtaydi.
+5) Brauzerni ochib, manzil qatoriga yozing:
+
+    http://localhost:8080
+
+Dastur ochiladi.
+
+
+5. DASTURDAN FOYDALANISH
+------------------------
+Yuqorida to'rtta tugma bor: Bosh sahifa, Obyektlar, Mijozlar,
+Bitimlar.
+
+ISHLASH TARTIBI: avval mijozlarni va obyektlarni kiriting, keyin
+bitim tuzing.
+
+(1) MIJOZLAR
+    1. F.I.Sh va telefonni yozing.
+    2. Ro'yxatdan "Sotuvchi" yoki "Xaridor" ni tanlang.
+    3. "Qo'shish" tugmasini bosing.
+
+(2) OBYEKTLAR (uy, kvartira va hokazo)
+    1. Manzilni yozing.
+    2. Turini tanlang: Kvartira, Uy, Yer uchastkasi yoki Ofis.
+    3. Xonalar sonini yozing (bo'sh qoldirsangiz, 0 bo'ladi).
+    4. Maydon (m2) va narxni (dollarda) butun son qilib yozing.
+    5. "Qo'shish" tugmasini bosing.
+
+(3) BITIMLAR (sotuv)
+    1. Obyektni tanlang. Ro'yxatda faqat hali sotilmaganlari
+       ko'rinadi.
+    2. Xaridorni tanlang. Ro'yxatda faqat "Xaridor" deb yozilgan
+       mijozlar bor.
+    3. Kelishilgan narxni (butun son) yozing. Sana avtomatik
+       qo'yiladi, xohlasangiz o'zgartiring.
+    4. "Bitim tuzish" tugmasini bosing.
+
+    Natija: obyekt "Sotilgan" bo'ladi va agentlikning 2% komissiyasi
+    avtomatik hisoblanadi.
+
+TAHRIRLASH VA O'CHIRISH
+- "Tahrirlash" (sariq tugma): ma'lumotlar tepadagi formaga chiqadi.
+  O'zgartirib "Saqlash" ni bosing. Fikringiz o'zgarsa, "Bekor
+  qilish" ni bosing.
+- "O'chirish" (qizil tugma): "O'chirishni xohlaysizmi?" deb so'raydi,
+  OK bosilsa o'chadi.
+
+BOSH SAHIFA
+Obyektlar, sotuvdagilar, mijozlar, bitimlar soni va jami daromad
+(komissiyalar yig'indisi) ko'rinadi.
+
+
+6. BILIB QO'YISH KERAK BO'LGAN QOIDALAR
+---------------------------------------
+- Bitimi bor obyekt yoki mijozni o'chirib bo'lmaydi. O'chirish tugmasi
+  bosiladi, lekin hech narsa o'zgarmaydi.
+- Bitimni o'chirib ham, o'zgartirib ham bo'lmaydi. Bitim tuzishdan
+  oldin ma'lumotlarni tekshirib oling.
+- Dastur xato xabari ko'rsatmaydi. Biror narsa saqlanmasa, sahifa
+  shunchaki qayta yuklanadi. Sababi: maydon bo'sh, narx noto'g'ri yoki
+  obyekt allaqachon sotilgan.
+- Dastur parolsiz. Uni internetga qo'ymang, faqat o'z kompyuteringizda
+  ishlating.
+
+
+7. TO'XTATISH VA QAYTA ISHGA TUSHIRISH
+--------------------------------------
+To'xtatish: qora oynaga o'ting va Ctrl + C bosing, keyin oynani
+yopsangiz bo'ladi. Brauzer oynasini yopish dasturni to'xtatmaydi.
+
+Ma'lumotlar saqlanib qoladi. Keyingi safar ishlatish uchun faqat
+4-bo'limni takrorlang (Python va Flask'ni qayta o'rnatish shart emas).
+
+
+8. MA'LUMOTLARNI SAQLASH VA TOZALASH
+------------------------------------
+Hamma ma'lumot bitta fayl: database.sqlite (C:\kurs1 papkasida).
+
+- Zaxira nusxa: shu faylni flesh-xotiraga yoki boshqa joyga nusxalang.
+- Hammasini noldan boshlash: dastur to'xtatilgan holda shu faylni
+  o'chiring. Keyingi ishga tushirishda bo'sh baza yaratiladi.
+
+
+9. MUAMMO BO'LSA
+----------------
+"'py' is not recognized as an internal or external command"
+    Python o'rnatilmagan yoki o'rnatishda "Add python.exe to PATH"
+    belgilanmagan. Python'ni o'chirib (Sozlamalar > Ilovalar),
+    1-bo'limdagi tartib bilan qaytadan o'rnating va 4-qadamdagi
+    katakchani belgilang.
+
+"No module named flask"
+    Flask o'rnatilmagan. 2-bo'limdagi buyruqni yozing.
+
+"python" deb yozsangiz Microsoft Store ochilib ketadi
+    "python" o'rniga har doim "py" yozing (py app.py).
+
+"can't open file ... app.py"
+    Qora oyna boshqa papkada ochilgan. 4-bo'limdagi 1-2 qadamni
+    takrorlang. Fayl nomi aynan "app.py" ekanini tekshiring (Notepad
+    ba'zan "app.py.txt" qilib saqlaydi).
+
+"Address already in use"
+    8080 raqami band: dastur allaqachon ochiq (boshqa qora oynada)
+    yoki boshqa dastur ishlatyapti. Eski qora oynani topib Ctrl + C
+    bosing. Yordam bermasa, app.py faylini Notepad'da oching,
+    eng oxiridagi "port=8080" ni "port=8081" qilib saqlang va
+    brauzerda localhost:8081 oching.
+
+Windows xavfsizlik oynasi (Firewall) so'rab qolsa
+    Dastur faqat shu kompyuterning o'zida ishlaydi, shuning uchun bu
+    oyna odatda chiqmaydi. Chiqsa, "Bekor qilish" ni bossangiz ham
+    dastur ishlayveradi.
+
+Brauzerda "saytga ulanib bo'lmadi"
+    Qora oyna yopilgan yoki dastur to'xtagan. 4-bo'limni takrorlang.
+
+Sahifa bo'sh yoki g'alati
+    Brauzerda F5 ni bosing. Yordam bermasa, qora oynadagi xato
+    yozuvini suratga olib yuboring.
+
+
+QO'SHIMCHA: LINUX'DA ISHLATISH
+------------------------------
+Terminalda: sudo apt install python3-flask
+Papkada:    python3 app.py
+Brauzerda:  http://localhost:8080

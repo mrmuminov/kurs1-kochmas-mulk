@@ -1,0 +1,109 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #234;
+}
+
+.menu {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.menu a {
+  display: inline-block;
+  background: #2a6fb0;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 3px;
+  font-size: 16px;
+}
+
+.menu a:hover {
+  background: #1d4f80;
+}
+
+.section {
+  background: white;
+  padding: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+form.inline {
+  display: inline;
+  margin: 0;
+}
+
+input, select {
+  padding: 8px;
+  margin: 3px;
+  font-size: 14px;
+}
+
+button {
+  padding: 8px 16px;
+  background: #3a9a3a;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #aaa;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background: #dde8f3;
+}
+
+.delete-button {
+  background: #c33;
+  padding: 4px 8px;
+}
+
+.edit-button {
+  display: inline-block;
+  background: #e0a020;
+  color: white;
+  text-decoration: none;
+  padding: 4px 8px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.card {
+  background: #dde8f3;
+  padding: 20px;
+  font-size: 18px;
+  min-width: 180px;
+}
+
+.sold {
+  color: red;
+}
+
+.free {
+  color: green;
+}
