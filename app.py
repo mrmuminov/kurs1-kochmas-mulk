@@ -5,7 +5,8 @@ import os
 import sqlite3
 from datetime import date
 
-from flask import Flask, redirect, render_template_string, request, send_from_directory
+from flask import Flask, abort, redirect, render_template_string, request, send_from_directory, session
+from werkzeug.security import check_password_hash, generate_password_hash
 
 FOLDER = os.path.dirname(os.path.abspath(__file__))
 DATABASE_FILE = os.environ.get("DATABASE_FILE", os.path.join(FOLDER, "database.sqlite"))
@@ -14,6 +15,7 @@ TYPES = ["Kvartira", "Uy", "Yer uchastkasi", "Ofis"]
 ROLES = ["Sotuvchi", "Xaridor"]
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "kurs1-development-key")
 
 
 # ---------- Baza ----------
@@ -32,7 +34,16 @@ def create_tables():
         CREATE TABLE IF NOT EXISTS clients (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, phone TEXT NOT NULL, role TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS deals (id INTEGER PRIMARY KEY AUTOINCREMENT, property_id INTEGER NOT NULL, client_id INTEGER NOT NULL,
             price REAL NOT NULL, commission REAL NOT NULL, deal_date TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, login TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL, role TEXT NOT NULL);
     """)
+    # Birinchi ishga tushirishda ikkita foydalanuvchi yaratiladi
+    if db.execute("SELECT COUNT(*) FROM users").fetchone()[0] == 0:
+        db.execute("INSERT INTO users (login, password_hash, role) VALUES (?, ?, ?)",
+                   ["admin", generate_password_hash("admin123"), "admin"])
+        db.execute("INSERT INTO users (login, password_hash, role) VALUES (?, ?, ?)",
+                   ["agent", generate_password_hash("agent123"), "agent"])
+        db.commit()
     db.close()
 
 
@@ -53,16 +64,29 @@ PAGE = r"""<!DOCTYPE html>
 
   <h1>Ko'chmas mulk agentligi</h1>
 
+  {% if user_login %}
   <div class="menu">
     <a href="/">Bosh sahifa</a>
     <a href="/properties">Obyektlar</a>
     <a href="/clients">Mijozlar</a>
     <a href="/deals">Bitimlar</a>
+    <span class="user">{{ user_login }} ({{ user_role }}) <a href="/logout">Chiqish</a></span>
   </div>
+  {% endif %}
 
   <div class="section">
 
-  {% if page == "home" %}
+  {% if page == "login" %}
+
+    <h2>Tizimga kirish</h2>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <form method="post" action="/login">
+      <input name="login" placeholder="Login" required>
+      <input name="password" type="password" placeholder="Parol" required>
+      <button type="submit">Kirish</button>
+    </form>
+
+  {% elif page == "home" %}
 
     <h2>Umumiy ma'lumot</h2>
     <div class="cards">
@@ -112,10 +136,12 @@ PAGE = r"""<!DOCTYPE html>
           {% endif %}
           <td>
             <a href="/properties?edit={{ property["id"] }}" class="edit-button">Tahrirlash</a>
+            {% if user_role == "admin" %}
             <form method="post" action="/properties/delete" class="inline" onsubmit="return confirm('O\'chirishni xohlaysizmi?')">
               <input type="hidden" name="id" value="{{ property["id"] }}">
               <button type="submit" class="delete-button">O'chirish</button>
             </form>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}
@@ -151,10 +177,12 @@ PAGE = r"""<!DOCTYPE html>
           <td>{{ client["role"] }}</td>
           <td>
             <a href="/clients?edit={{ client["id"] }}" class="edit-button">Tahrirlash</a>
+            {% if user_role == "admin" %}
             <form method="post" action="/clients/delete" class="inline" onsubmit="return confirm('O\'chirishni xohlaysizmi?')">
               <input type="hidden" name="id" value="{{ client["id"] }}">
               <button type="submit" class="delete-button">O'chirish</button>
             </form>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}
@@ -201,6 +229,47 @@ PAGE = r"""<!DOCTYPE html>
 </body>
 </html>
 """
+
+
+# ---------- Kirish va rollar ----------
+
+@app.context_processor
+def current_user():
+    return {"user_login": session.get("login"), "user_role": session.get("role")}
+
+
+@app.before_request
+def require_login():
+    # Kirmagan foydalanuvchi faqat kirish sahifasi va dizaynni ko'ra oladi
+    if "login" not in session and request.endpoint not in ("login", "style"):
+        return redirect("/login")
+
+
+def admin_only():
+    # O'chirish faqat administratorga ruxsat etiladi
+    if session.get("role") != "admin":
+        abort(403)
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    error = ""
+    if request.method == "POST":
+        db = connect()
+        user = db.execute("SELECT * FROM users WHERE login = ?", [request.form.get("login", "").strip()]).fetchone()
+        db.close()
+        if user is not None and check_password_hash(user["password_hash"], request.form.get("password", "")):
+            session["login"] = user["login"]
+            session["role"] = user["role"]
+            return redirect("/")
+        error = "Login yoki parol noto'g'ri"
+    return render_template_string(PAGE, page="login", error=error)
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
 
 
 # ---------- Dizayn fayli ----------
@@ -280,6 +349,7 @@ def save_property():
 
 @app.route("/properties/delete", methods=["POST"])
 def delete_property():
+    admin_only()
     property_id = request.form.get("id", "0")
     db = connect()
     # Bitimi bor obyektni o'chirib bo'lmaydi
@@ -334,6 +404,7 @@ def save_client():
 
 @app.route("/clients/delete", methods=["POST"])
 def delete_client():
+    admin_only()
     client_id = request.form.get("id", "0")
     db = connect()
     # Bitimi bor mijozni o'chirib bo'lmaydi

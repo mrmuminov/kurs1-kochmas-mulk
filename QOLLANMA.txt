@@ -77,8 +77,9 @@ Dastur ochiladi.
 
 5. DASTURDAN FOYDALANISH
 ------------------------
-Yuqorida to'rtta tugma bor: Bosh sahifa, Obyektlar, Mijozlar,
-Bitimlar.
+Avval login va parolni yozib "Kirish" ni bosing. Yuqorida to'rtta
+tugma bor: Bosh sahifa, Obyektlar, Mijozlar, Bitimlar. O'ng tomonda
+sizning loginingiz va "Chiqish" tugmasi turadi.
 
 ISHLASH TARTIBI: avval mijozlarni va obyektlarni kiriting, keyin
 bitim tuzing.
@@ -111,8 +112,8 @@ TAHRIRLASH VA O'CHIRISH
 - "Tahrirlash" (sariq tugma): ma'lumotlar tepadagi formaga chiqadi.
   O'zgartirib "Saqlash" ni bosing. Fikringiz o'zgarsa, "Bekor
   qilish" ni bosing.
-- "O'chirish" (qizil tugma): "O'chirishni xohlaysizmi?" deb so'raydi,
-  OK bosilsa o'chadi.
+- "O'chirish" (qizil tugma): faqat administratorga ko'rinadi.
+  "O'chirishni xohlaysizmi?" deb so'raydi, OK bosilsa o'chadi.
 
 BOSH SAHIFA
 Obyektlar, sotuvdagilar, mijozlar, bitimlar soni va jami daromad
@@ -128,8 +129,11 @@ Obyektlar, sotuvdagilar, mijozlar, bitimlar soni va jami daromad
 - Dastur xato xabari ko'rsatmaydi. Biror narsa saqlanmasa, sahifa
   shunchaki qayta yuklanadi. Sababi: maydon bo'sh, narx noto'g'ri yoki
   obyekt allaqachon sotilgan.
-- Dastur parolsiz. Uni internetga qo'ymang, faqat o'z kompyuteringizda
-  ishlating.
+- Dastur ochilganda login va parol so'raladi. Tayyor ikkita hisob bor:
+  admin / admin123 (hamma amal, shu jumladan o'chirish) va
+  agent / agent123 (qo'shish, tahrirlash, bitim tuzish; o'chirish yo'q).
+  Parollar bazada heshlangan holda saqlanadi. Dasturni internetga
+  qo'ymang, faqat o'z kompyuteringizda ishlating.
 
 
 7. TO'XTATISH VA QAYTA ISHGA TUSHIRISH
