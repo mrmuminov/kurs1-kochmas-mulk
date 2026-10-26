@@ -30,6 +30,10 @@ class AgencyTest(unittest.TestCase):
     def add_client(self, name="Aliyev", role="Xaridor"):
         self.client.post("/clients/save", data={"id": "0", "name": name, "phone": "901234567", "role": role})
 
+    def add_deal(self, property_id="1", client_id="1", price="40000"):
+        self.client.post("/deals/add", data={"property_id": property_id, "client_id": client_id, "price": price,
+                                              "deal_date": "2026-10-01"})
+
     def count(self, table):
         db = agency.connect()
         result = db.execute("SELECT COUNT(*) FROM " + table).fetchone()[0]
@@ -95,8 +99,7 @@ class AgencyTest(unittest.TestCase):
         self.login("agent", "agent123")
         self.add_property()
         self.add_client()
-        self.client.post("/deals/add", data={"property_id": "1", "client_id": "1", "price": "40000",
-                                              "deal_date": "2026-10-01"})
+        self.add_deal()
         db = agency.connect()
         deal = db.execute("SELECT * FROM deals").fetchone()
         sold = db.execute("SELECT sold FROM properties WHERE id = 1").fetchone()[0]
@@ -108,8 +111,7 @@ class AgencyTest(unittest.TestCase):
         self.login("admin", "admin123")
         self.add_property()
         self.add_client()
-        self.client.post("/deals/add", data={"property_id": "1", "client_id": "1", "price": "40000",
-                                              "deal_date": "2026-10-01"})
+        self.add_deal()
         self.client.post("/properties/delete", data={"id": "1"})
         self.client.post("/clients/delete", data={"id": "1"})
         self.assertEqual(self.count("properties"), 1)
@@ -119,8 +121,7 @@ class AgencyTest(unittest.TestCase):
         self.login("agent", "agent123")
         self.add_property()
         self.add_client()
-        self.client.post("/deals/add", data={"property_id": "1", "client_id": "1", "price": "40000",
-                                              "deal_date": "2026-10-01"})
+        self.add_deal()
         self.assertIn("800.00", self.client.get("/").get_data(as_text=True))
 
 

@@ -1,0 +1,6 @@
+{
+  "name": "kurs-ishi-build",
+  "private": true,
+  "description": "Kurs ishi (.docx) va taqdimot (.pptx) generatori",
+  "dependencies": { "docx": "^9", "pptxgenjs": "^3" }
+}
