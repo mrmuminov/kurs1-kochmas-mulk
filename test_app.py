@@ -46,6 +46,11 @@ class AgencyTest(unittest.TestCase):
             self.assertEqual(response.status_code, 302)
             self.assertTrue(response.headers["Location"].endswith("/login"))
 
+    def test_login_page_shows_initial_accounts(self):
+        page = self.client.get("/login").get_data(as_text=True)
+        self.assertIn("admin123", page)
+        self.assertIn("agent123", page)
+
     def test_wrong_password_is_rejected(self):
         response = self.login("admin", "wrong")
         self.assertEqual(response.status_code, 200)

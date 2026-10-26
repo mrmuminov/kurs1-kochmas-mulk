@@ -85,6 +85,11 @@ PAGE = r"""<!DOCTYPE html>
       <input name="password" type="password" placeholder="Parol" required>
       <button type="submit">Kirish</button>
     </form>
+    <p class="info">
+      Boshlang'ich hisoblar:<br>
+      Administrator: <b>admin</b> / <b>admin123</b><br>
+      Agent: <b>agent</b> / <b>agent123</b>
+    </p>
 
   {% elif page == "home" %}
 
